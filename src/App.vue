@@ -1,28 +1,34 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<main>
+  <board />
+</main>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Kanit');
 
+body {
+  margin: 0;
+  font-family: 'Kanit', sans-serif;
+}
+
+main {
+  position: relative;
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: #5E5E5E;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+
+<script>
+import board from '@/components/board'
 export default {
-  name: 'app',
+  name: 'CONTAINER',
   components: {
-    HelloWorld
+    board
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
