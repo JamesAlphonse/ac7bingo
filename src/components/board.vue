@@ -1,17 +1,5 @@
 <template>
 <div id="board">
-	<transition name="fade">
-		<div id="popup" v-if="popup">
-			<div id="top">
-				<div id="exit" @click="popup = false">CLOSE</div>
-			</div>
-			<div id="msg">
-				<h1>BINGO!</h1>
-				<h6>Bingo Count: {{bingoCount}}</h6>
-			</div>
-		</div>
-	</transition>
-
 	<div v-for="row in board" :key="board[row]" class="row">
 		<div v-for="column in row" :key="row[column]" :class="[ column.checked ? 'column checked' : 'column' ]" @click="bingoSelect(row, column)">
 			{{ column.todo }}
@@ -42,54 +30,6 @@
 	background-position: center;
 	border: 1px solid black;
 
-	#popup {
-		position: absolute;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 80%;
-		height: 50%;
-		background: white;
-		border: 2px solid black;
-		z-index: 1;
-		box-shadow: 0px 0px 70px 0px black;
-
-		#top {
-			position: relative;
-			display: flex;
-			width: 100%;
-			height: 50px;
-
-			#exit {
-				position: absolute;
-				right: 0px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 50px;
-				height: 100%;
-				background: grey;
-				transition: all 0.2s;
-				user-select: none;
-			}
-
-			#exit:hover {
-				background: red;
-			}
-		}
-
-		#msg {
-			h1, h6 {
-				padding: 0px;
-				margin: 0px;
-				text-align: center;
-			}
-		}
-	}
-
-	.fade-enter-active, .fade-leave-active {
-	  transition: all 0.5s;
-	}
 	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 	  opacity: 0;
 	  transform: translateY(-45px);
@@ -115,8 +55,6 @@
 			font-size: 18px;
 			user-select: none;
 			cursor: pointer;
-			transition: all 0.2s;
-			opacity: 1;
 			color: white;
 			-webkit-text-stroke: 1px black;
 			font-weight: 700;
@@ -160,7 +98,7 @@ methods: {
 
 		if(win){
 			this.bingoCount++
-			this.popup = true
+			this.$emit('show-popup', true)
 		}
 	},
 	checkHorizontal(row) {
@@ -227,7 +165,6 @@ methods: {
 },
 data() {
 	return {
-		popup: false,
 		board: [
 			[ // row 0
 				{
