@@ -5,11 +5,12 @@
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Kanit');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,700');
 
 body {
   margin: 0;
-  font-family: 'Kanit', sans-serif;
+  font-family: 'Rubik', sans-serif;
+  overflow: none;
 }
 
 main {
@@ -20,6 +21,7 @@ main {
   background: #5E5E5E;
   justify-content: center;
   align-items: center;
+  overflow: auto;
 }
 </style>
 

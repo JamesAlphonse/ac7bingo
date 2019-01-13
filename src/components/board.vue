@@ -24,14 +24,22 @@
 #board {
 	position: relative;
 	display: flex;
+	box-sizing: border-box;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 500px;
+
+	min-width: 400px;
+	width: 1000px;
 	max-width: 100vw;
-	height: 500px;
+
+	min-height: 400px;
+	height: 1000px;
 	max-height: 100vh;
-	background: white;
+
+	background: url("../assets/bingobg.jpg");
+	background-size: cover;
+	background-position: center;
 	border: 1px solid black;
 
 	#popup {
@@ -84,7 +92,7 @@
 	}
 	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
 	  opacity: 0;
-	  transform: rotateX(45deg) translateY(-90px);
+	  transform: translateY(-45px);
 	}
 
 	.row {
@@ -92,33 +100,38 @@
 		display: flex;
 		flex-direction: row;
 		width: 100%;
-		height: 100px;
+		height: 20%;
 
 		.column {
+			box-sizing: border-box;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			width: 100px;
+			width: 25%;
 			height: 100%;
-			border: 1px solid black;
+			background: rgba(0, 0, 0, 0.2);
+			border: 1px solid white;
 			text-align: center;
-			font-size: 12px;
+			font-size: 18px;
 			user-select: none;
 			cursor: pointer;
 			transition: all 0.2s;
 			opacity: 1;
+			color: white;
+			-webkit-text-stroke: 1px black;
+			font-weight: 700;
 		}
 
 		.column:hover {
-			background: #DFEBF5;
+			background: rgba(0, 0, 0, 0.6);
 		}
 
 		.checked {
-			background: #B8F5CB;
+			background: rgba(0, 0, 0, 0.8);
 		}
 
 		.checked:hover {
-			background: #F5C4C4;
+			background: rgba(0, 0, 0, 0.6);;
 		}
 	}
 }
