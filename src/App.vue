@@ -1,6 +1,6 @@
 <template>
-<main>
- <popup @show-popup="showPopup()" />
+<main ref="main">
+ <popup />
  <board />
 </main>
 </template>
@@ -11,34 +11,36 @@
 body {
  margin: 0;
  font-family: 'Rubik', sans-serif;
- overflow: none;
+ overflow: auto;
 }
 
 body * {
- transition: all 0.4s;
+ transition: all 0.3s ease-in-out;
 }
 
 main {
  position: relative;
- display: flex;
- min-width: 100vw;
- min-height: 100vh;
  background: #5E5E5E;
- justify-content: center;
- align-items: center;
- overflow: auto;
+ overflow: none;
+ z-index: 1;
 }
+
 </style>
 
 <script>
+import {serverBus} from '@/main'
 import popup from '@/components/popup'
 import board from '@/components/board'
+
 export default {
  name: 'CONTAINER',
- methods: {
-  showPopup() {
-   console.log('test')
-  }
+ mounted() {
+ 	serverBus.$on('popup', val => {
+ 		if(val.show)
+			document.body.style.overflow = "hidden"
+		else
+			document.body.style.overflow = "auto"
+	})
  },
  components: {
   popup,

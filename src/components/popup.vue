@@ -1,78 +1,118 @@
 <template>
-<div>
-<div @show-popup="showPopup()"></div>
 <transition name="fade">
-<div id="popup" v-if="show">
-	<div id="top">
-		<div id="exit" @click="show = false">CLOSE</div>
-	</div>
-	<div id="msg">
-		<h1>BINGO!</h1>
-		<h6>Bingo Count: {{bingoCount}}</h6>
+<div ref="popup" id="popup" v-if="show" @click.self="hide" tarnsition="fade">
+	<div v-if="show" id="popup-inner">
+		<div id="top">
+			<div id="exit" @click="hide">CLOSE</div>
+		</div>
+		<div id="msg">
+			<h1>BINGO!</h1>
+			<h6>Bingo Count: {{bingoCount}}</h6>
+		</div>
 	</div>
 </div>
 </transition>
-</div>
 </template>
 
 <style lang="scss" scoped>
+.fade-enter, .fade-leave-to {
+	opacity: 0;
+}
+
+.fade-enter #popup-inner, .fade-leave-to #popup-inner{
+	transform: translateY(-20%);
+}
+
+.fade-enter-to {
+	opacity: 1;
+	transform: translateY(0%);
+}
+
 #popup {
 	position: absolute;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	width: 80%;
-	height: 50%;
-	background: white;
-	border: 2px solid black;
-	z-index: 1;
-	box-shadow: 0px 0px 70px 0px black;
+	justify-content: center;
+	left: 0px;
+	top: 0px;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 3;
 
-	#top {
+	#popup-inner {
 		position: relative;
 		display: flex;
-		width: 100%;
-		height: 50px;
+		flex-direction: column;
+		align-items: center;
+		width: 80%;
+		height: 50%;
+		background: white;
+		border: 2px solid black;
+		box-shadow: 0px 0px 70px 0px black;
 
-		#exit {
-			position: absolute;
-			right: 0px;
+		#top {
+			position: relative;
 			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 50px;
-			height: 100%;
-			background: grey;
-			user-select: none;
+			width: 100%;
+			height: 50px;
+
+			#exit {
+				position: absolute;
+				right: 0px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 50px;
+				height: 100%;
+				background: grey;
+				user-select: none;
+			}
+
+			#exit:hover {
+				background: red;
+			}
 		}
 
-		#exit:hover {
-			background: red;
-		}
-	}
-
-	#msg {
-		h1, h6 {
-			padding: 0px;
-			margin: 0px;
-			text-align: center;
+		#msg {
+			h1, h6 {
+				padding: 0px;
+				margin: 0px;
+				text-align: center;
+			}
 		}
 	}
 }
 </style>
 
 <script>
+import {serverBus} from '@/main'
+
 export default {
 	name: "POPUP",
+	mounted() {
+		serverBus.$on('popup', val => {
+		   this.show = val.show
+		   this.bingoCount = val.bingoCount
+		})
+
+		document.onkeydown = e => {
+			if(this.show && (e.key =="Escape" || e.key == "Esc"))
+				this.hide()
+		}
+	},
 	methods: {
-		showPopup(val) {
-			console.log('val:', val)
-			this.show = val
+		hide() {
+			serverBus.$emit('popup', {
+				show: false,
+				bingoCount: this.bingoCount
+			})
 		}
 	},
 	data() {
 		return {
-			show: false
+			show: false,
+			bingoCount: 0
 		}
 	}
 }

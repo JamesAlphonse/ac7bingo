@@ -12,43 +12,26 @@
 #board {
 	position: relative;
 	display: flex;
-	box-sizing: border-box;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	min-width: 400px;
-	width: 1000px;
-	max-width: 100vw;
-
-	min-height: 400px;
-	height: 1000px;
-	max-height: 100vh;
-
 	background: url("../assets/bingobg.jpg");
 	background-size: cover;
 	background-position: center;
-	border: 1px solid black;
-
-	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-	  opacity: 0;
-	  transform: translateY(-45px);
-	}
+	z-index: 2;
 
 	.row {
 		position: relative;
 		display: flex;
 		flex-direction: row;
-		width: 100%;
-		height: 20%;
 
 		.column {
-			box-sizing: border-box;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			width: 25%;
-			height: 100%;
+			box-sizing: border-box;
+			min-width: 120px;
+			width: 20vw;
+			min-height: 120px;
+			height: 20vh;
 			background: rgba(0, 0, 0, 0.2);
 			border: 1px solid white;
 			text-align: center;
@@ -65,17 +48,19 @@
 		}
 
 		.checked {
-			background: rgba(0, 0, 0, 0.8);
+			background: rgba(26, 255, 0, 0.28)
 		}
 
 		.checked:hover {
-			background: rgba(0, 0, 0, 0.6);;
+			background: rgba(255, 84, 0, 0.45);
 		}
 	}
 }
 </style>
 
 <script>
+import {serverBus} from '@/main'
+
 export default {
 name: "BOARD",
 methods: {
@@ -98,7 +83,10 @@ methods: {
 
 		if(win){
 			this.bingoCount++
-			this.$emit('show-popup', true)
+			serverBus.$emit('popup', {
+				show: true,
+				bingoCount: this.bingoCount
+			})
 		}
 	},
 	checkHorizontal(row) {
