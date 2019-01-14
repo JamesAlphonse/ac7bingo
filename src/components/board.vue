@@ -12,10 +12,9 @@
 #board {
 	position: relative;
 	display: flex;
+	width: 100%;
+	height: 100%;
 	flex-direction: column;
-	background: url("../assets/bingobg.jpg");
-	background-size: cover;
-	background-position: center;
 	z-index: 2;
 
 	.row {
@@ -28,15 +27,15 @@
 			align-items: center;
 			justify-content: center;
 			box-sizing: border-box;
-			min-width: 120px;
+			padding: 10px;
+			min-width: 150px;
 			width: 20vw;
-			min-height: 120px;
+			min-height: 150px;
 			height: 20vh;
 			background: rgba(0, 0, 0, 0.2);
-			border: 1px solid white;
+			border: 1px solid rgba(255, 255, 255, 0.2);
 			text-align: center;
-			font-size: 18px;
-			user-select: none;
+			font-size: 20px;
 			cursor: pointer;
 			color: white;
 			-webkit-text-stroke: 1px black;

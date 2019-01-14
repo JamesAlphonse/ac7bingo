@@ -1,30 +1,45 @@
 <template>
 <main ref="main">
- <popup />
- <board />
+	<!-- <div id="test">test</div> -->
+	<popup />
+	<board />
 </main>
 </template>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Rubik:400,700');
 
-body {
- margin: 0;
- font-family: 'Rubik', sans-serif;
- overflow: auto;
+html, body {
+	position: relative;
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	font-family: 'Rubik', sans-serif;
+	background: orange;
+	overflow: auto;
 }
 
 body * {
- transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	user-select: none;
 }
 
 main {
- position: relative;
- background: #5E5E5E;
- overflow: none;
- z-index: 1;
+	position: absolute;
+	display: block;
+	background: url("assets/bingobg.jpg");
+	background-size: cover;
+	background-position: center;
+	z-index: 1;
 }
 
+#test {
+	position: relative;
+	display: block;
+	width: 2000px;
+	height: 2000px;
+}
 </style>
 
 <script>

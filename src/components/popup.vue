@@ -20,7 +20,7 @@
 }
 
 .fade-enter #popup-inner, .fade-leave-to #popup-inner{
-	transform: translateY(-20%);
+	transform: translateY(-100px);
 }
 
 .fade-enter-to {
@@ -29,7 +29,7 @@
 }
 
 #popup {
-	position: absolute;
+	position: fixed;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -39,23 +39,27 @@
 	height: 100vh;
 	background: rgba(0, 0, 0, 0.6);
 	z-index: 3;
+	overflow: hidden;
 
 	#popup-inner {
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		width: 80%;
+		max-width: 400px;
 		height: 50%;
+		max-height: 300px;
 		background: white;
-		border: 2px solid black;
-		box-shadow: 0px 0px 70px 0px black;
+		box-shadow: 0px 0px 10px 0px black;
 
 		#top {
-			position: relative;
+			position: absolute;
 			display: flex;
 			width: 100%;
 			height: 50px;
+			top: 0px;
 
 			#exit {
 				position: absolute;
@@ -63,10 +67,9 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 50px;
-				height: 100%;
+				padding: 20px;
 				background: grey;
-				user-select: none;
+				cursor: pointer;color: white;
 			}
 
 			#exit:hover {
