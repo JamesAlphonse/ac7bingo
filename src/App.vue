@@ -1,8 +1,8 @@
 <template>
 <main ref="main">
-	<!-- <div id="test">test</div> -->
 	<popup />
 	<board />
+	<button id="reset" @click="reset">Reset Board and Reload Page</button>
 </main>
 </template>
 
@@ -32,13 +32,22 @@ main {
 	background-size: cover;
 	background-position: center;
 	z-index: 1;
-}
 
-#test {
-	position: relative;
-	display: block;
-	width: 2000px;
-	height: 2000px;
+	#reset {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #FACDCD;
+		color: white;
+		width: 100%;
+		height: 60px;
+		cursor: pointer;
+	}
+
+	#reset:hover {
+		background: #FF9E9E;
+	}
 }
 </style>
 
@@ -56,6 +65,11 @@ export default {
 		else
 			document.body.style.overflow = "auto"
 	})
+ },
+ methods: {
+ 	reset() {
+ 		serverBus.$emit('resetBoard', true)
+ 	}
  },
  components: {
   popup,

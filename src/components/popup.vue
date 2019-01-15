@@ -7,7 +7,7 @@
 		</div>
 		<div id="msg">
 			<h1>BINGO!</h1>
-			<h6>Bingo Count: {{bingoCount}}</h6>
+			<!--<h6>Bingo Count: {{bingoCount}}</h6>-->
 		</div>
 	</div>
 </div>

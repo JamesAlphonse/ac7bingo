@@ -59,9 +59,13 @@
 
 <script>
 import {serverBus} from '@/main'
+import Cookie from 'js-cookie'
 
 export default {
 name: "BOARD",
+components: {
+	Cookie,
+},
 methods: {
 	bingoSelect(row, column) {
 		if(column.checked && this.win)
@@ -150,124 +154,80 @@ methods: {
 		return (checkCount1 === 5 || checkCount2 === 5)
 	}
 },
+mounted() {
+
+	serverBus.$on('resetBoard', val => {
+ 		if(val){
+ 			Cookie.remove('bingo_board')
+ 			location.reload()
+ 		}
+	})
+
+	let list;
+	if(Cookie.get('bingo_board')){
+		list = Cookie.get('bingo_board').split('|')
+	}
+	else{
+		list = [
+			"ENEMY ATTACKS FROM SPACE",
+			"WEAPONIZED WEATHER",
+			"GOOD GUYS WERE BAD ALL ALONG",
+			"ESCORT MISSION",
+			"SURVIVE UNTIL ALLIES ARRIVE",
+			"WINGMAN DIES",
+			"PLAYER CHARACTER EXCLUDED FROM CINEMATICS",
+			"RAZGRIZ REFERENCE",
+			"ATTEMPTEED MURDER-SUICIDE",
+			"DECIEVING THE ENEMY",
+			"DESTROY A SUPER WEAPON",
+			"ENEMIES WERE BAITED INTO WAR",
+			"TUNNEL RUN SEGMENT",
+			"\"DEAD\" CHARACTER RETURNS AT THE END",
+			"IT WAS BELKA",
+			"TOKEN ROCK SONG",
+			"FRIENDLY POLITICIAN IS KIDNAPPED",
+			"NO-WEAPON MISSION",
+			"ENEMY ACE CAN GET SNIPED BY SPECIALS",
+			"DEFEND ENEMY DEFECTOR",
+			"SHOOTING DOWN MISSILES",
+			"XENOPHOBIA",
+			"NUKES ARE INVOLVED",
+			"ASSISTING A GROUND ASSAULT",
+			"LITERALLY FLYING UNDER THE RADAR"
+		]
+
+		function shuffle(a) {
+		    for (let i = a.length - 1; i > 0; i--) {
+		        const j = Math.floor(Math.random() * (i + 1));
+		        [a[i], a[j]] = [a[j], a[i]];
+		    }
+		    return a;
+		}
+
+		shuffle(list)
+
+		let d = new Date()
+		let time = 60 * 1000
+        d.setTime(d.getTime() + time)
+		Cookie.set('bingo_board', list.join('|'), {expires: d })
+	}
+
+	let count = 0;
+	for(let i = 0; i < 5; i++){
+		let temp = []
+		for(let j = 0; j < 5; j++){
+			temp.push({
+				todo: list[count],
+				checked: false
+			})
+			count++
+		}
+		this.board.push(temp)
+	}
+},
 data() {
 	return {
-		board: [
-			[ // row 0
-				{
-					todo: "ENEMY ATTACKS FROM SPACE",
-					checked: false
-				},
-				{
-					todo: "WEAPONIZED WEATHER",
-					checked: false
-				},
-				{
-					todo: "GOOD GUYS WERE BAD ALL ALONG",
-					checked: false
-				},
-				{
-					todo: "ESCORT MISSION",
-					checked: false
-				},
-				{
-					todo: "SURVIVE UNTIL ALLIES ARRIVE",
-					checked: false
-				}
-			],
-
-			[ // row 1
-				{
-					todo: "WINGMAN DIES",
-					checked: false
-				},
-				{
-					todo: "PLAYER CHARACTER EXCLUDED FROM CINEMATICS",
-					checked: false
-				},
-				{
-					todo: "RAZGRIZ REFERENCE",
-					checked: false
-				},
-				{
-					todo: "ATTEMPTEED MURDER-SUICIDE",
-					checked: false
-				},
-				{
-					todo: "DECIEVING THE ENEMY",
-					checked: false
-				}
-			],
-
-			[ // row 2
-				{
-					todo: "DESTROY A SUPER WEAPON",
-					checked: false
-				},
-				{
-					todo: "ENEMIES WERE BAITED INTO WAR",
-					checked: false
-				},
-				{
-					todo: "TUNNEL RUN SEGMENT",
-					checked: false
-				},
-				{
-					todo: "\"DEAD\" CHARACTER RETURNS AT THE END",
-					checked: false
-				},
-				{
-					todo: "IT WAS BELKA",
-					checked: false
-				}
-			],
-
-			[ // row 3
-				{
-					todo: "TOKEN ROCK SONG",
-					checked: false
-				},
-				{
-					todo: "FRIENDLY POLITICIAN IS KIDNAPPED",
-					checked: false
-				},
-				{
-					todo: "NO-WEAPON MISSION",
-					checked: false
-				},
-				{
-					todo: "ENEMY ACE CAN GET SNIPED BY SPECIALS",
-					checked: false
-				},
-				{
-					todo: "DEFEND ENEMY DEFECTOR",
-					checked: false
-				}
-			],
-
-			[	// row 4
-				{
-					todo: "SHOOTING DOWN MISSILES",
-					checked: false
-				},
-				{
-					todo: "XENOPHOBIA",
-					checked: false
-				},
-				{
-					todo: "NUKES ARE INVOLVED",
-					checked: false
-				},
-				{
-					todo: "ASSISTING A GROUND ASSAULT",
-					checked: false
-				},
-				{
-					todo: "LITERALLY FLYING UNDER THE RADAR",
-					checked: false
-				}
-			]
-		],
+		board: [],
 		bingoCount: 0
 	}
 }
