@@ -1,5 +1,10 @@
 # ac7bingo
 
+## Live Project
+```
+http://james-alphonse.com/examples/ac7bingo/
+```
+
 ## Project setup
 ```
 npm install
