@@ -2,7 +2,7 @@
 <main ref="main">
 	<popup />
 	<board />
-	<button id="reset" @click="reset">Reset Board and Reload Page</button>
+	<button id="reset" @click="reset">Shuffle Board and Reload Page</button>
 </main>
 </template>
 
@@ -58,19 +58,15 @@ import board from '@/components/board'
 
 export default {
  name: 'CONTAINER',
+
  mounted() {
- 	serverBus.$on('popup', val => {
- 		if(val.show)
-			document.body.style.overflow = "hidden"
-		else
-			document.body.style.overflow = "auto"
-	})
+ 	serverBus.$on('popup', val => {if(val){document.body.style.overflow = "hidden"}else{document.body.style.overflow = "auto"}})
  },
+
  methods: {
- 	reset() {
- 		serverBus.$emit('resetBoard', true)
- 	}
+ 	reset() {serverBus.$emit('resetBoard', true)}
  },
+
  components: {
   popup,
   board

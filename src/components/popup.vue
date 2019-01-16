@@ -7,7 +7,6 @@
 		</div>
 		<div id="msg">
 			<h1>BINGO!</h1>
-			<!--<h6>Bingo Count: {{bingoCount}}</h6>-->
 		</div>
 	</div>
 </div>
@@ -93,29 +92,20 @@ import {serverBus} from '@/main'
 
 export default {
 	name: "POPUP",
-	mounted() {
-		serverBus.$on('popup', val => {
-		   this.show = val.show
-		   this.bingoCount = val.bingoCount
-		})
 
-		document.onkeydown = e => {
-			if(this.show && (e.key =="Escape" || e.key == "Esc"))
-				this.hide()
-		}
+	mounted() {
+		serverBus.$on('popup', val => {this.show = val})
+
+		document.onkeydown = e => {if(this.show && (e.key =="Escape" || e.key == "Esc"))this.hide()}
 	},
+
 	methods: {
-		hide() {
-			serverBus.$emit('popup', {
-				show: false,
-				bingoCount: this.bingoCount
-			})
-		}
+		hide() {serverBus.$emit('popup', false)}
 	},
+
 	data() {
 		return {
-			show: false,
-			bingoCount: 0
+			show: false
 		}
 	}
 }
