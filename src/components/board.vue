@@ -87,7 +87,7 @@ methods: {
 			if(index > -1)selected.splice(index, 1)
 		}
 
-		let d = new Date(); d.setTime(d.getTime() + 60000)
+		let d = new Date(); d.setTime(d.getTime() + 999999999999)
 		Cookie.set('bingo_selected', selected.join('|'), {expires: d })
 	},
 
@@ -205,7 +205,7 @@ mounted() {
 		function shuffle(a) {for (let i = a.length - 1; i > 0; i--){const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]} return a;}
 		shuffle(list)
 
-		let d = new Date(); d.setTime(d.getTime() + 60000)
+		let d = new Date(); d.setTime(d.getTime() + 999999999999)
 		Cookie.set('bingo_board', list.join('|'), {expires: d })
 	}
 
